@@ -4,7 +4,15 @@
 ## How to start docker compose
 
 ```bash
+ # start docker compose
+ docker compose up -d
 
+# make iot sensor 2
+$ docker run -it --rm --name my-maven-project -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven arm64v8/maven:3.8-jdk-8 mvn clean install
+
+# build image iot sensor 2
+docker build -t iot_sensor2:1.0 .
+ # restart docker compose 
 ```
 
 ## Error we found
