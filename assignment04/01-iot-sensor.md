@@ -42,16 +42,84 @@ client.publish("iot-frames", jsonBuffer);
 #include <ArduinoJson.h>
 #include <WiFiUdp.h>
 #include <ESPNtpClient.h>
+#include <Adafruit_NeoPixel.h>
 
 // WiFi credentials
-const char* ssid = "TP-Link_CA30";
-const char* password = "29451760";
+const char* ssid = "TP-Link_CA1E";
+const char* password = "34397121";
+// const char* ssid = "TP-Link_CA0C";
+// const char* password = "84722966";
+// const char* ssid = "TP-Link_CA30";
+// const char* password = "29451760";
+// const char* ssid = "IoT_Class1";
+// const char* password = "IoTClass1234";
 
 // MQTT Broker settings
+
+// iot-frames-1 pass: Jaekeaw1
+// iot-frames-2 pass: HWaINz
+// iot-frames-3 pass: piN5S6
+// iot-frames-4 pass: nX7M
+// iot-frames-5 pass: V3G9NXu2
+// iot-frames-6 pass: s9GYHQyR4
+// iot-frames-7 pass: gVCnnXgn
+// iot-frames-8 pass: XMeKCwZS
+// iot-frames-9 pass: OvM+7jg1OSZ
+// iot-frames-10 pass: Jaekeaw10
+
 const char* mqtt_server = "172.16.46.37";
+
+//1
+// const int mqtt_port = 1883;
+// const char* mqtt_user = "iot-frames-1"; // Replace with your MQTT username if needed
+// const char* mqtt_password = "Jaekeaw1"; // Replace with your MQTT password if needed
+
+// //2
+// const int mqtt_port = 1883;
+// const char* mqtt_user = "iot-frames-2"; // Replace with your MQTT username if needed
+// const char* mqtt_password = "HWaINz"; // Replace with your MQTT password if needed
+
+// 3
 const int mqtt_port = 1883;
-const char* mqtt_user = ""; // Replace with your MQTT username if needed
-const char* mqtt_password = ""; // Replace with your MQTT password if needed
+const char* mqtt_user = "iot-frames-3"; // Replace with your MQTT username if needed
+const char* mqtt_password = "piN5S6"; // Replace with your MQTT password if needed
+
+// // 4
+// const int mqtt_port = 1883;
+// const char* mqtt_user = "iot-frames-4"; // Replace with your MQTT username if needed
+// const char* mqtt_password = "nX7M"; // Replace with your MQTT password if needed
+
+// //5
+// const int mqtt_port = 1883;
+// const char* mqtt_user = "iot-frames-5"; // Replace with your MQTT username if needed
+// const char* mqtt_password = "V3G9NXu2"; // Replace with your MQTT password if needed
+
+// //6
+// const int mqtt_port = 1883;
+// const char* mqtt_user = "iot-frames-6"; // Replace with your MQTT username if needed
+// const char* mqtt_password = "s9GYHQyR4"; // Replace with your MQTT password if needed
+
+// //7
+// const int mqtt_port = 1883;
+// const char* mqtt_user = "iot-frames-7"; // Replace with your MQTT username if needed
+// const char* mqtt_password = "gVCnnXgn"; // Replace with your MQTT password if needed
+
+// //8
+// const int mqtt_port = 1883;
+// const char* mqtt_user = "iot-frames-8"; // Replace with your MQTT username if needed
+// const char* mqtt_password = "XMeKCwZS"; // Replace with your MQTT password if needed
+
+
+// //9
+// const int mqtt_port = 1883;
+// const char* mqtt_user = "iot-frames-9"; // Replace with your MQTT username if needed
+// const char* mqtt_password = "OvM+7jg1OSZ"; // Replace with your MQTT password if needed
+
+// //10
+// const int mqtt_port = 1883;
+// const char* mqtt_user = "iot-frames-10"; // Replace with your MQTT username if needed
+// const char* mqtt_password = "Jaekeaw10"; // Replace with your MQTT password if needed
+
 
 const PROGMEM char* ntpServer = "172.16.46.37";
 
@@ -70,20 +138,26 @@ Adafruit_MPU6050 mpu;
 // LED pin
 const int ledPin = 2;
 
+// NeoPixel
+#define PIN 18  // กำหนดขาให้เชื่อมต่อกับ NeoPixel
+#define NUMPIXELS 1  // จำนวนของ NeoPixel
+
+Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+
 // ldr GPIO 5
 const int ldrPin = 5;  // GPIO5 for LDR
 
 // MQTT callback function only one sensor
 void callback(char* topic, byte* payload, unsigned int length) {
-  Serial.print("Message arrived [");
-  Serial.print(topic);
-  Serial.print("] ");
+  // Serial.print("Message arrived [");
+  // Serial.print(topic);
+  // Serial.print("] ");
   
   String message;
   for (int i = 0; i < length; i++) {
     message += (char)payload[i];
   }
-  Serial.println(message);
+  // Serial.println(message);
 
   // Parse JSON
   StaticJsonDocument<200> doc;
@@ -99,7 +173,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
   // Check if the sensor name is "iot_sensor_3"
   if (strcmp(sensor_name, "iot_sensor_3") == 0) {
-    Serial.print("----------------------------Filtered message: ");
+    // Serial.print("----------------------------Filtered message: ");
     Serial.println(message);
   }
 }
@@ -132,21 +206,67 @@ void setup_wifi() {
 }
 
 void reconnect() {
-  // Loop until we're reconnected
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
-    // Attempt to connect
+    setStatusLED(2);  // กำลังเชื่อมต่อกับ MQTT YELLOW สลับ GREEN 5วิ
+    delay(1000);
+    setStatusLED(2);  // กำลังเชื่อมต่อกับ MQTT YELLOW สลับ GREEN 5วิ
+    delay(1000);
     if (client.connect("iot_sensor_3", mqtt_user, mqtt_password)) {
       Serial.println("connected");
-      // Subscribe to topic
+      setStatusLED(5);  // MQTT เชื่อมต่อแล้ว GREEN
       client.subscribe("iot-frames");
+      delay(2000); // 5000
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
       Serial.println(" try again in 5 seconds");
-      // Wait 5 seconds before retrying
-      delay(5000);
+      delay(5000); // 5000
     }
+  }
+}
+
+// RGB 
+void setupRGB() {
+  pixels.begin(); // Initialize NeoPixel
+  pixels.setBrightness(50);  // กำหนดความสว่างของ NeoPixel
+}
+void setRGBColor(uint8_t red, uint8_t green, uint8_t blue) {
+  pixels.clear();  // ล้างสีเก่า
+  pixels.setPixelColor(0, pixels.Color(red, green, blue));  // ตั้งค่าสีใหม่
+  pixels.show();  // แสดงสีที่เลือก
+}
+// G R B
+void setStatusLED(int status) {
+  switch (status) {
+    case 0: // ยังไม่ได้เชื่อมต่อ Wi-Fi และ MQTT
+      setRGBColor(0, 255, 0); // สีแดง
+      break;
+    case 1: // เชื่อมต่อ Wi-Fi ได้
+      setRGBColor(255, 0, 0); // สีเขียว
+      delay(500);
+      break;
+    case 2: // ระหว่างเชื่อมต่อ MQTT
+      setRGBColor(255, 255, 0); // สีเหลือง
+      break;
+    case 3: // ระหว่างส่งข้อมูล
+      setRGBColor(255, 255, 255); // สีขาว
+      delay(1000);
+      setRGBColor(0, 0, 0); // ปิดไฟกระพริบ
+      delay(500);
+      break;
+    case 4: // ระหว่าง
+      setRGBColor(151, 252, 0); // สี
+      delay(1000);
+      setRGBColor(0, 0, 0); // ปิดไฟกระพริบ
+      delay(500);
+      break;
+    case 5: // ระหว่าง
+      setRGBColor(0, 0, 0); // สี
+      delay(1000);
+      setRGBColor(0, 0, 0); // ปิดไฟกระพริบ
+      delay(500);
+      break;
   }
 }
 
@@ -179,16 +299,18 @@ void setupHardware() {
 void setup() {
   Serial.begin(115200);
   setupHardware();
+  setStatusLED(0); //////////
   setup_wifi();
+  setupRGB();
+  setStatusLED(1);  // Wi-Fi เชื่อมต่อแล้ว GREEN
+
   client.setServer(mqtt_server, mqtt_port);
   client.setCallback(callback);
-  // timeClient.begin();
 
   NTP.setTimeZone(TZ_Asia_Bangkok);
   NTP.setInterval(600);
   NTP.setNTPTimeout(NTP_TIMEOUT);
   NTP.begin(ntpServer);
-
 
   Serial.println("Starting!!!");
 }
@@ -204,52 +326,53 @@ unsigned long Get_Epoch_Time(){
 }
 
 void loop() {
-  if (!client.connected()) {
-    reconnect();
-  }
-  client.loop();
-
-  static uint32_t prev_millis = 0;
-  const size_t capacity = JSON_OBJECT_SIZE(6) + 200;
-  StaticJsonDocument<capacity> doc;
-
-  if (millis() - prev_millis > 15000) {
-    prev_millis = millis();
-
-    float p = bmp.readPressure();
-
-    int ldrValue = analogRead(ldrPin); // Read LDR value from GPIO5
-
-    float temperature, humidity;
-    int16_t error = sht4x.measureHighPrecision(temperature, humidity);
-    if (error) {
-      Serial.print("Error trying to execute measureHighPrecision(): ");
-      Serial.println(error);
-    } else {
+  if (WiFi.status() != WL_CONNECTED) {
+    setStatusLED(0);  // แสดงสถานะ Wi-Fi หลุดด้วยสีแดง
+    setup_wifi();  // พยายามเชื่อมต่อ Wi-Fi ใหม่
+  } else {
+    if (!client.connected()) {
+      reconnect();
+    }
+    client.loop();
   
-    unsigned long epochTime = Get_Epoch_Time();
-
-    doc["id"] = "43245253";
-    doc["name"] = "iot_sensor_3";
-    doc["place_id"] = "42343243";
-    // doc["date"] = formattedDate; // Use real-time date
-    doc["date"] = NTP.getTimeDateString(time(NULL), "%Y-%m-%dT%H:%M:%S");
-    doc["timestamp"] = epochTime; // Convert to milliseconds
-    doc["payload"]["temperature"] = temperature;
-    doc["payload"]["humidity"] = humidity; // Update with correct humidity reading
-    doc["payload"]["pressure"] = p;
-    doc["payload"]["luminosity"] = ldrValue;
-
-    // Serialize JSON to char array
-    char jsonBuffer[capacity];
-    serializeJson(doc, jsonBuffer);
-
-    // Publish JSON to MQTT topic
-    client.publish("iot-frames", jsonBuffer);
-  }
-
-  delay(2000);
+    static uint32_t prev_millis = 0;
+    const size_t capacity = JSON_OBJECT_SIZE(6) + 200;
+    StaticJsonDocument<capacity> doc;
+  
+    if (millis() - prev_millis > 15000) {
+      prev_millis = millis();
+  
+      float p = bmp.readPressure();
+      int ldrValue = analogRead(ldrPin);
+      float temperature, humidity;
+      int16_t error = sht4x.measureHighPrecision(temperature, humidity);
+  
+      if (error) {
+        Serial.print("Error trying to execute measureHighPrecision(): ");
+        Serial.println(error);
+      } else {
+        unsigned long epochTime = Get_Epoch_Time();
+  
+        doc["id"] = "43245253";
+        doc["name"] = "iot_sensor_3";
+        doc["place_id"] = "32347983";
+        doc["date"] = NTP.getTimeDateString(time(NULL), "%Y-%m-%dT%H:%M:%S");
+        doc["timestamp"] = epochTime;
+        doc["payload"]["temperature"] = temperature;
+        doc["payload"]["humidity"] = humidity;
+        doc["payload"]["pressure"] = p;
+        doc["payload"]["luminosity"] = ldrValue;
+  
+        char jsonBuffer[capacity];
+        serializeJson(doc, jsonBuffer);
+  
+        setStatusLED(3);  // กำลังส่งข้อมูล
+        client.publish("iot-frames", jsonBuffer);
+      }
+      delay(2000);
+    }
   }
 }
+
 
 ```
