@@ -115,8 +115,6 @@ Once the installation is finished, your server is ready to use.
     # into project 
     cd iot_event_streaming_architecture
 
-    # Run Project 
-    sudo docker compose up
 ```
 
 ## How to install Docker 🐳
