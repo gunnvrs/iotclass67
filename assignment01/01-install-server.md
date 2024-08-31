@@ -134,8 +134,22 @@ Once the installation is finished, your server is ready to use.
     # Install the Docker packages:
     sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
+### Manage Docker as a non-root user
+To create the `docker` group and add your user:
+1. Create the `docker` group.
+``` bash
+sudo groupadd docker
+```
+2. Add your user to the `docker` group.
+```bash
+sudo usermod -aG docker $USER
+```
+3. Log out and log back in so that your group membership is re-evaluated.
+```bash
+newgrp docker
+```
 
-* Set up DNS Docker and Docker login
+### Set up DNS Docker and Docker login
 ``` bash
     # use vim edit file
     sudo vim /etc/docker/daemon.json
