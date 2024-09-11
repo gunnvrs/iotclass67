@@ -1,15 +1,16 @@
 # Ingest and store real-time data from IoT sensors.
 
 ## MQTT Topic
-ในโปรเจกต์นี้ใช้ MQTT สำหรับการสื่อสารข้อมูลระหว่าง CUCUMBER RS (ESP32) กับ MQTT Broker โดยมี MQTT Topic ชื่อว่า `iot-frames` สำหรับการส่งข้อมูลจากเซ็นเซอร์ไปยัง Broker ดังนี้
+ในโปรเจกต์วิชา Iot นี้ใช้ MQTT เป็นโปรโตคอลที่ใช้สำหรับการสื่อสารข้อมูลระหว่าง CUCUMBER RS (ESP32) กับ MQTT Broker โดยมี MQTT Topic ชื่อว่า `iot-frames` สำหรับการส่งข้อมูลจากเซ็นเซอร์ไปยัง Broker ดังนี้
 
 ```python
 client.publish("iot-frames", jsonBuffer);
 ```
+นี่คือ Topic ที่ใช้เพื่อส่งในช่องเดียวกัน
 
 ## MQTT Payload
 ข้อมูลที่ส่งไปยัง MQTT Broker จะอยู่ในรูปแบบ JSON Payload ซึ่งประกอบไปด้วยข้อมูลของเซ็นเซอร์ต่าง ๆ และ timestamp 
-เช่น กรณีของ Sensor 3 จะต้องส่ง payload ให้อยู่ตามรูปแบบ Pattern ดังนี้ 
+เช่น กรณีของ Sensor 3 จะต้องส่ง payload ให้อยู่ตามรูปแบบ Pattern ดังนี้  
 
 ```json
 {
@@ -26,9 +27,9 @@ client.publish("iot-frames", jsonBuffer);
   }
 }
 ```
-
+- payload นี้มีความสำคัญเมื่อต้องส่งค่าไปให้ทาง Server  โดย Mosquito จะจัดการทุกอย่างและ นำข้อมูลไปส่งขึ้น Grafrana
 ## ESP32
-
+- โค้ดสำหรับ CUCUMBER
 ```cpp
 
 #include <Wire.h>
@@ -45,81 +46,19 @@ client.publish("iot-frames", jsonBuffer);
 #include <Adafruit_NeoPixel.h>
 
 // WiFi credentials
-const char* ssid = "TP-Link_CA1E";
-const char* password = "34397121";
-// const char* ssid = "TP-Link_CA0C";
-// const char* password = "84722966";
-// const char* ssid = "TP-Link_CA30";
-// const char* password = "29451760";
-// const char* ssid = "IoT_Class1";
-// const char* password = "IoTClass1234";
+
+const char* ssid = "TP-Link_CA30";
+const char* password = "29451760";
+
 
 // MQTT Broker settings
 
-// iot-frames-1 pass: Jaekeaw1
-// iot-frames-2 pass: HWaINz
-// iot-frames-3 pass: piN5S6
-// iot-frames-4 pass: nX7M
-// iot-frames-5 pass: V3G9NXu2
-// iot-frames-6 pass: s9GYHQyR4
-// iot-frames-7 pass: gVCnnXgn
-// iot-frames-8 pass: XMeKCwZS
-// iot-frames-9 pass: OvM+7jg1OSZ
-// iot-frames-10 pass: Jaekeaw10
-
 const char* mqtt_server = "172.16.46.37";
-
-//1
-// const int mqtt_port = 1883;
-// const char* mqtt_user = "iot-frames-1"; // Replace with your MQTT username if needed
-// const char* mqtt_password = "Jaekeaw1"; // Replace with your MQTT password if needed
-
-// //2
-// const int mqtt_port = 1883;
-// const char* mqtt_user = "iot-frames-2"; // Replace with your MQTT username if needed
-// const char* mqtt_password = "HWaINz"; // Replace with your MQTT password if needed
 
 // 3
 const int mqtt_port = 1883;
 const char* mqtt_user = "iot-frames-3"; // Replace with your MQTT username if needed
 const char* mqtt_password = "piN5S6"; // Replace with your MQTT password if needed
-
-// // 4
-// const int mqtt_port = 1883;
-// const char* mqtt_user = "iot-frames-4"; // Replace with your MQTT username if needed
-// const char* mqtt_password = "nX7M"; // Replace with your MQTT password if needed
-
-// //5
-// const int mqtt_port = 1883;
-// const char* mqtt_user = "iot-frames-5"; // Replace with your MQTT username if needed
-// const char* mqtt_password = "V3G9NXu2"; // Replace with your MQTT password if needed
-
-// //6
-// const int mqtt_port = 1883;
-// const char* mqtt_user = "iot-frames-6"; // Replace with your MQTT username if needed
-// const char* mqtt_password = "s9GYHQyR4"; // Replace with your MQTT password if needed
-
-// //7
-// const int mqtt_port = 1883;
-// const char* mqtt_user = "iot-frames-7"; // Replace with your MQTT username if needed
-// const char* mqtt_password = "gVCnnXgn"; // Replace with your MQTT password if needed
-
-// //8
-// const int mqtt_port = 1883;
-// const char* mqtt_user = "iot-frames-8"; // Replace with your MQTT username if needed
-// const char* mqtt_password = "XMeKCwZS"; // Replace with your MQTT password if needed
-
-
-// //9
-// const int mqtt_port = 1883;
-// const char* mqtt_user = "iot-frames-9"; // Replace with your MQTT username if needed
-// const char* mqtt_password = "OvM+7jg1OSZ"; // Replace with your MQTT password if needed
-
-// //10
-// const int mqtt_port = 1883;
-// const char* mqtt_user = "iot-frames-10"; // Replace with your MQTT username if needed
-// const char* mqtt_password = "Jaekeaw10"; // Replace with your MQTT password if needed
-
 
 const PROGMEM char* ntpServer = "172.16.46.37";
 
@@ -376,3 +315,5 @@ void loop() {
 
 
 ```
+- Flow chart จากโค้ด Cucumber
+![alt text](image.png)
