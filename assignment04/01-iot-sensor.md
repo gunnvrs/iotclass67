@@ -13,20 +13,17 @@ client.publish("iot-frames", jsonBuffer);
 เช่น กรณีของ Sensor 3 จะต้องส่ง payload ให้อยู่ตามรูปแบบ Pattern ดังนี้  
 
 ```json
-{
-  "id": "43245253",
-  "name": "iot_sensor_3",
-  "place_id": "42343243",
-  "date": "2024-07-15T10:30:00Z",  
-  "timestamp": 1626346200000,
-  "payload": {
-    "temperature": 25.6,
-    "humidity": 50.2,
-    "pressure": 1013.25,
-    "luminosity": 230
-  }
-}
+  doc["id"] = "43245253";
+  doc["name"] = "iot_sensor_3";
+  doc["place_id"] = "32347983";
+  doc["date"] = NTP.getTimeDateString(time(NULL), "%Y-%m-%dT%H:%M:%S");
+  doc["timestamp"] = epochTime;
+  doc["payload"]["temperature"] = temperature;
+  doc["payload"]["humidity"] = humidity;
+  doc["payload"]["pressure"] = p;
+  doc["payload"]["luminosity"] = ldrValue;
 ```
+- ตัวเวลาจะดึงจาก NTP server และจะได้มาในรูปแบบประมาณนี้ "date": "2024-07-15T10:30:00Z",  
 - payload นี้มีความสำคัญเมื่อต้องส่งค่าไปให้ทาง Server  โดย Mosquito จะจัดการทุกอย่างและ นำข้อมูลไปส่งขึ้น Grafrana
 ## ESP32
 - โค้ดสำหรับ CUCUMBER
@@ -278,7 +275,7 @@ void loop() {
     const size_t capacity = JSON_OBJECT_SIZE(6) + 200;
     StaticJsonDocument<capacity> doc;
   
-    if (millis() - prev_millis > 15000) {
+    if (millis() - prev_millis > 5000) {
       prev_millis = millis();
   
       float p = bmp.readPressure();
