@@ -253,7 +253,8 @@ sh start_0zookeeper_kafka.sh
 * [zookeeper](https://github.com/Thanabodin19/iotclass67/blob/main/assignment00/architecture.md#apache-zookeeper)
 * [kafka](https://github.com/Thanabodin19/iotclass67/blob/main/assignment00/architecture.md#apache-kafka)
 
-> **_NOTE:_** เมื่อรันคำสั่ง รอจนกว่า service kafka zookeeper จะนิ่งถึงจะรัน `start-service #1` ต่อไป
+> [!NOTE]
+> เมื่อรันคำสั่ง รอจนกว่า service kafka zookeeper จะนิ่งถึงจะรัน `start-service #1` ต่อไป
 
 
 ## start-service #1
@@ -268,7 +269,8 @@ sh start_1kafka_service.sh
 * [grafana](https://github.com/Thanabodin19/iotclass67/blob/main/assignment00/architecture.md#grafana)
 * [prometheus](https://github.com/Thanabodin19/iotclass67/blob/main/assignment00/architecture.md#prometheus)
 
-> **_NOTE:_** เมื่อรันคำสั่ง รอจนกว่า terminal จะแสดง 
+> [!NOTE]
+> เมื่อรันคำสั่ง รอจนกว่า terminal จะแสดง 
 `kafka-connect Kafka Connect listener HTTP state:  000  (waiting for 200)` ถึงจะรัน `start-service #2` ต่อไป
 ## start-service #2
 ```bash
@@ -287,7 +289,7 @@ sh start_3iot_sensor.sh
 #### service
 * [iot_sensor](https://github.com/Thanabodin19/iotclass67/blob/main/assignment00/architecture.md#iot-sensor)
 
-<!-- > [!NOTE]
+> [!NOTE]
 > This is a note.
 
 > [!TIP]
@@ -300,4 +302,4 @@ sh start_3iot_sensor.sh
 > Negative potential consequences of an action. (Supported since 14 Nov 2023)
 
 > [!WARNING]
-> Critical content comes here. -->
+> Critical content comes here.
