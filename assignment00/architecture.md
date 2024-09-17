@@ -1,3 +1,4 @@
+
 # Main technologies of architecture
 
 ## Architecture Overview
@@ -79,3 +80,4 @@ IoT Sensor เป็นโมดูลเซ็นเซอร์หรือฟ
 
 ### IoT Sensor container
 IoT Sensor เป็น sensor ที่ถูกจําลองด้วยไมโครเซอร์วิสที่ใช้ใน Spring Boot (ผ่านไลบรารี Eclipse Paho MQTT) ที่ถูกติดตั้งอยู่บนเซิฟเวอร์ โดยจะส่งข้อมูล telemetry ไปยังโบรกเกอร์ Eclipse Mosquitto ข้อมูลที่ถูกจำลองนี้ generate ค่า ทุกอย่างภายใน payload มาจาก Callable โดยจะถูกสร้างขึ้นทุกวินาทีและ มี payload ในรูปแบบที่สร้างขึ้นให้ตรงกัน
+
