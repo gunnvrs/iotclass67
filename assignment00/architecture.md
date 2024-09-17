@@ -1,4 +1,3 @@
-
 # Main technologies of architecture
 
 ## Architecture Overview
