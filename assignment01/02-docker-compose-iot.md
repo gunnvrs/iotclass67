@@ -272,12 +272,16 @@ sh start_1kafka_service.sh
 > [!NOTE]
 > เมื่อรันคำสั่ง รอจนกว่า terminal จะแสดง 
 `kafka-connect Kafka Connect listener HTTP state:  000  (waiting for 200)` ถึงจะรัน `start-service #2` ต่อไป
+
 ## start-service #2
 ```bash
 sh start_2iot_processor.sh
 ```
 #### service
 * [iot-processor](https://github.com/Thanabodin19/iotclass67/blob/main/assignment00/architecture.md#iot-processor)
+
+> [!NOTE]
+> รอจนกว่า iot-processor ขึ้น initialize ถึงจะรัน `start-service #3` ต่อไป
 
 > [!WARNING]
 > ถ้าขึ้น `iot-processor Shutdown complete` ให้ restart iot-processor 
@@ -289,7 +293,8 @@ sh start_3iot_sensor.sh
 #### service
 * [iot_sensor](https://github.com/Thanabodin19/iotclass67/blob/main/assignment00/architecture.md#iot-sensor)
 
-> [!NOTE]
+
+<!-- > [!NOTE]
 > This is a note.
 
 > [!TIP]
@@ -302,4 +307,4 @@ sh start_3iot_sensor.sh
 > Negative potential consequences of an action. (Supported since 14 Nov 2023)
 
 > [!WARNING]
-> Critical content comes here.
+> Critical content comes here. -->
