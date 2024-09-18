@@ -1,5 +1,5 @@
 # Used technology
->> สรุปว่าเราใช้ technology stack อะไรบ้างในโครงการนี้ ทำ link ไปยังแต่ละส่วน
+<!-- >> สรุปว่าเราใช้ technology stack อะไรบ้างในโครงการนี้ ทำ link ไปยังแต่ละส่วน -->
 
 
 - [ ] Ubuntu Server Installation
