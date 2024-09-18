@@ -2,6 +2,7 @@
 
 การสร้าง Dashboard สำหรับ Visualization โดยใช้ Grafana และ FlowCharting คือการนำข้อมูลจากเซ็นเซอร์มาวิเคราะห์และแสดงผลในรูปแบบแผนผังสถานที่ผ่าน FlowCharting ซึ่งเป็น Plugin ของ Grafana ที่ช่วยให้ผู้ใช้สามารถสร้างและปรับแต่งแผนผัง (Flowchart) เพื่อแสดงสถานะหรือข้อมูลต่างๆ ให้สามารถเข้าใจง่าย สำหรับการสร้างแผนผังสถานที่ที่ต้องการ ผู้ใช้สามารถสร้างแผนผังนั้นใน Draw.io ซึ่งเป็นเครื่องมือสำหรับการออกแบบ Diagram จากนั้นนำแผนผังที่สร้างเสร็จแล้วมาใช้ใน Grafana ผ่าน FlowCharting Plugin เพื่อเชื่อมต่อกับข้อมูลเซ็นเซอร์ แล้วนำมา แสดงผลข้อมูลลงบน Dashboard ซึ่งจะช่วยให้ผู้ใช้สามารถติดตามสถานะและข้อมูลต่างๆของแต่ละ sensor ได้อย่างมีประสิทธิภาพและเข้าใจง่าย
 
+
 ## งานที่ได้ทำ
 จากงานได้ใช้เซ็นเซอร์ทั้งหมด 10 ตัว เพื่อมาแสดงข้อมูล อุณหภูมิ (Temperature), ความชื้น (Humidity), ความสว่าง (Luminosity), และ ความดัน (Pressure) โดยมีทั้งรูปแบบ Guage, Stat และ Graph และยังสามารถเก็บข้อมูลเป็น time series data บน Prometeus ได้อีกด้วย 
 
@@ -65,6 +66,12 @@
 ![My Image](pic/afterRule.png)
 
 โดยการแสดงผลบนแผนผังบ้าน สามารถใช้การเปลี่ยนสีของเซ็นเซอร์บนแผนผังเพื่อแสดงสถานะต่าง ๆ เช่น หากอุณหภูมิในห้องใดห้องหนึ่งสูงหรือต่ำเกินไป แผนผังจะแสดงสีที่แตกต่างกัน โดยเมื่ออุณหภูมิสูงกว่าที่กำหนด sensor จะเปลี่ยนเป็นสีแดง เพื่อแสดงถึงความร้อน และเมื่ออุณหภูมิต่ำเกินไป sensor จะเปลี่ยนเป็นสี น้ำเงิน เพื่อแสดงถึงความเย็น เป็นการแจ้งเตือนให้ทราบถึงความผิดปกติที่เกิดขึ้นภายในบ้าน วิธีนี้ช่วยให้ผู้ใช้งานสามารถรับรู้และดำเนินการแก้ไขได้ทัน ทำให้ smart home นี้มีความปลอดภัยและประหยัดพลังงานมากขึ้น
+
+และยังได้ทำการตรวจจับ performance ของเครื่อง gateway โดยการ Monitoring Linux host metrics ด้วย node exporter plugin ผ่าน Dashbord ของ Grafana ข้อมูลที่รับมาจะถูกนำไปเก็บ time series เหมือนกันกับค่าที่ได้รับมาจาก sensor และนำมา Visualize บน dashboard โดยจะแสดงข้อมูล CPU, Memory, Storage Disk, Network และ System  ฯลฯ
+
+![My Image](pic/nodeExporter.png)
+
+
 
 # Start grafana 
 ## Mount volume for grafana
@@ -168,3 +175,15 @@ grafana-cli plugins install agenty-flowcharting-panel -->
 เมื่อทำเสร็จครบแล้วจะสามารถ save และ apply ได้ภาพตามนี้
 
 ![My Image](pic/afterRule.png)
+
+## Node exporter 
+### Step 1
+เปิดการใช้งาน port nodeexporter-gateway ในไฟล์ prometheus.yaml ใน folder prometheus
+![My Image](pic/opennodeexporter.png)
+
+### Step 2
+Import file Node Exporter Full rev37.json บน Grafana
+
+### Step 3
+เลือกใช้ข้อมูล nodeexporter-gateway 
+![My Image](pic/gateway.png)
