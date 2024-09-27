@@ -67,7 +67,7 @@
 
 โดยการแสดงผลบนแผนผังบ้าน สามารถใช้การเปลี่ยนสีของเซ็นเซอร์บนแผนผังเพื่อแสดงสถานะต่าง ๆ เช่น หากอุณหภูมิในห้องใดห้องหนึ่งสูงหรือต่ำเกินไป แผนผังจะแสดงสีที่แตกต่างกัน โดยเมื่ออุณหภูมิสูงกว่าที่กำหนด sensor จะเปลี่ยนเป็นสีแดง เพื่อแสดงถึงความร้อน และเมื่ออุณหภูมิต่ำเกินไป sensor จะเปลี่ยนเป็นสี น้ำเงิน เพื่อแสดงถึงความเย็น เป็นการแจ้งเตือนให้ทราบถึงความผิดปกติที่เกิดขึ้นภายในบ้าน วิธีนี้ช่วยให้ผู้ใช้งานสามารถรับรู้และดำเนินการแก้ไขได้ทัน ทำให้ smart home นี้มีความปลอดภัยและประหยัดพลังงานมากขึ้น
 
-และยังได้ทำการตรวจจับ performance ของเครื่อง gateway โดยการ Monitoring Linux host metrics ด้วย node exporter plugin ผ่าน Dashbord ของ Grafana ข้อมูลที่รับมาจะถูกนำไปเก็บ time series เหมือนกันกับค่าที่ได้รับมาจาก sensor และนำมา Visualize บน dashboard โดยจะแสดงข้อมูล CPU, Memory, Storage Disk, Network และ System  ฯลฯ
+และยังได้ทำการตรวจจับ performance ของเครื่อง gateway โดยการ Monitoring Linux host metrics ด้วย node exporter plugin ผ่าน Dashbord ของ Grafana ข้อมูลที่รับมาจะถูกนำไปเก็บ time series เหมือนกันกับค่าที่ได้รับมาจาก sensor และนำมา Visualize บน dashboard โดยจะแสดงข้อมูล CPU, Memory, Storage Disk, Network และ System  ฯลฯ 
 
 ![My Image](pic/nodeExporter.png)
 
